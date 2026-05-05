@@ -45,17 +45,7 @@ def simulate_low_light(input_image_path: str, output_image_path: str,
 
 
 def add_sensor_noise(image: np.ndarray, fixed_C5: int = None) -> np.ndarray:
-    """
-    添加符合 Brooks et al. (2019) 和 Foi et al. (2008) 的真实相机传感器噪声。
-    模拟低光条件下，包含 Poisson（shot）+ Gaussian（read）噪声。
 
-    参数:
-        image: 输入图像 (float32, 已归一化到[0,1])
-        fixed_C5: 可选的噪声等级（0-19），如为 None 则随机选择
-
-    返回:
-        添加噪声后的图像，仍在[0,1]范围内
-    """
     #assert image.dtype == np.float32 and image.max() <= 1.0, "图像必须为 float32 且归一化到[0,1]"
 
     # 生成或固定噪声等级 C5 ∈ {0, 1, ..., 19}
@@ -195,18 +185,4 @@ def process_folder_suiji(input_dir: str, output_dir: str,
             except Exception as e:
                 print(f"处理失败: {filename}, 错误: {str(e)}")
 
-# 示例使用 1：处理单张图片（自动生成参数）
-#process_single_image(r"E:\data\ShanghaiTechDataset\training\train_frames\01_001\frame_00000.jpg", r"C:\Users\hony\Desktop\000000.jpg",fixed_C5=None, alpha=0.62, beta=0.62, gamma=2.12)
-# process_folder_suiji(r"E:\data\ShanghaiTechDataset\training\train_frames\01_052",
-#                r"C:\Users\hony\Desktop\01_052shishi0",
-#                fixed_C5=None, alpha=None, beta=None, gamma=None)
-# 示例使用 2：处理单个文件夹（指定参数）
-process_folder(r"/home/zhouhao/PycharmProjects/lxhanProject/aed-mae/data/avenue/test/frames-ori/04", r"/home/zhouhao/PycharmProjects/lxhanProject/frames",fixed_C5=None, alpha=0.77, beta=1.92, gamma=2.18)
-
-# 示例使用 3：处理嵌套文件夹（每个子文件夹独立参数）
-# batch_process("/media/lmy/processing/han/aed-mae-xin/data/ShanghaiTech_0.93_0.71_1.66/test/frames", "/media/lmy/processing/han/aed-mae-xin/data/ShanghaiTech_0.93_0.71_1.66/test/frames_",
-#               alpha=0.93,beta=0.71,gamma=1.66)
-
-# 示例使用 4：处理嵌套文件夹（所有子文件夹统一使用指定参数）
-#batch_process(r"/home/zhouhao/PycharmProjects/lxhanProject/aed-mae/data/avenue/test/frames", r"/home/zhouhao/PycharmProjects/lxhanProject/frames",fixed_C5=None, alpha=0.62, beta=0.62, gamma=2.12)
-#process_folder_suiji('/media/lmy/processing/han/aed-mae-xin/data/avenue/train/frames/01','/media/lmy/processing/han/SCI/data/01_random')
+process_folder()
